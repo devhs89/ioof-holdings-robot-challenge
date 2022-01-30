@@ -1,8 +1,8 @@
 package constants;
 
-public enum Directions {
+public enum Direction {
   NORTH,
-  SOUTH,
   EAST,
+  SOUTH,
   WEST
 }
