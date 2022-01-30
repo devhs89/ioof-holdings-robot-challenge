@@ -23,8 +23,6 @@ public class TableController {
         table.getSlots().add(new Slot(i, j));
       }
     }
-
-    System.out.println(table.getSlots().size());
   }
 
   public Boolean placeRobot(int xPos, int yPos, Direction direction) throws Exception {
@@ -96,11 +94,19 @@ public class TableController {
         break;
     }
 
-    if (nextX >= 0 && nextX <= (tableMaxWidth - 1) && nextY >= 0 && nextY <= (tableMaxHeight - 1)) {
-      activeRobot.setXPos(nextX);
-      activeRobot.setYPos(nextY);
+    for (Robot r : table.getRobots()) {
+      if (r.getXPos() == nextX && r.getXPos() == nextY) {
+        throw new Exception("\nError:\tSlot occupied by '" + r.getIdentifier() + "'. Change direction.");
+      }
+    }
+
+    if (nextX >= 0 && nextY >= 0) {
+      if (nextX <= (tableMaxWidth - 1) && nextY <= (tableMaxHeight - 1)) {
+        activeRobot.setXPos(nextX);
+        activeRobot.setYPos(nextY);
+      }
     } else {
-      throw new Exception("\nError:\tAt the end of table. Change direction");
+      throw new Exception("\nError:\tAt the end of table. Change direction.");
     }
   }
 
@@ -128,7 +134,7 @@ public class TableController {
 
     if (activeRobot == null) throw new Exception("\nError:\tNo active robot found. Please place one.");
 
-    System.out.printf("\nName: %s\nX-Position: %d\nY-Position: %d\nFacing: %s\n", activeRobot.getIdentifier(), activeRobot.getXPos(), activeRobot.getYPos(), activeRobot.getDirection());
+    System.out.printf("\n[Active Robot]\nName: %s\nX-Position: %d\nY-Position: %d\nFacing: %s\n", activeRobot.getIdentifier(), activeRobot.getXPos(), activeRobot.getYPos(), activeRobot.getDirection());
   }
 
   public void setActiveRobot(String identifier) throws Exception {

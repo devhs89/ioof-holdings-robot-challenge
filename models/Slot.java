@@ -1,8 +1,8 @@
 package models;
 
 public class Slot {
-  int xCords;
-  int yCords;
+  final int xCords;
+  final int yCords;
 
   public int getXCords() {
     return xCords;
