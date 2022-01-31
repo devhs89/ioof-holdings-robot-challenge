@@ -95,7 +95,7 @@ public class TableController {
     }
 
     for (Robot r : table.getRobots()) {
-      if (r.getXPos() == nextX && r.getXPos() == nextY) {
+      if (r.getXPos() == nextX && r.getYPos() == nextY) {
         throw new Exception("\nError:\tSlot occupied by '" + r.getIdentifier() + "'. Change direction.");
       }
     }
