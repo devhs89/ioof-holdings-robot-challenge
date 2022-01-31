@@ -34,9 +34,6 @@ public class TableController {
       }
     }
 
-    robot = new Robot();
-    robot = createRobot(xPos, yPos, direction);
-
     Slot slotExits = null;
 
     for (Slot s : table.getSlots()) {
@@ -49,6 +46,9 @@ public class TableController {
       for (Robot r : table.getRobots()) {
         r.setActive(false);
       }
+
+      robot = new Robot();
+      robot = createRobot(xPos, yPos, direction);
       table.getRobots().add(robot);
     } else {
       throw new Exception("\nError:\tSlot not present on table. Please try again.");
