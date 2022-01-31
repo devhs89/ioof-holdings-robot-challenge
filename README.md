@@ -1,6 +1,8 @@
 # ioof-holdings-robot-challenge
 A code challenge to showcase my programming skills.
 
+#### Java 11
+
 ### How to play the "Robot" game
 
 1. Enter the size of the table (Ex. 5x5, 4x3)
