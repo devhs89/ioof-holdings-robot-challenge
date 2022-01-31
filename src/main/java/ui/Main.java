@@ -19,7 +19,7 @@ public class Main {
     try {
       userInput = getInput("Please enter the size of the table. (Ex. 5x5) -\nType here: ");
 
-      if (!userInput.strip().matches("\\dx\\d")) throw new Exception("\nError:\tInvalid Input");
+      if (!userInput.strip().matches("\\dx\\d")) throw new Exception("\nError:\tInvalid Input. Rerun program.");
 
       var tableDimens = userInput.split("x");
       var tableWidth = Integer.parseInt(tableDimens[0]);
