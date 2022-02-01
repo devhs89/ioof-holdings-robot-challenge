@@ -12,7 +12,6 @@ public class Slot {
     return yCords;
   }
 
-
   public Slot(int xCords, int yCords) {
     this.xCords = xCords;
     this.yCords = yCords;

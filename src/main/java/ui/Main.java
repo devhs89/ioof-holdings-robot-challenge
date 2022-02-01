@@ -1,6 +1,6 @@
 package ui;
 
-import constants.Commands;
+import constants.Command;
 import constants.Direction;
 import constants.Rotate;
 import controllers.TableController;
@@ -25,8 +25,10 @@ public class Main {
       var tableWidth = Integer.parseInt(tableDimens[0]);
       var tableHeight = Integer.parseInt(tableDimens[1]);
 
+      //Create table with set dimensions
       tableController.createTable(tableWidth, tableHeight);
 
+      //Prompt for command and perform desired action
       performAction(tableWidth, tableHeight);
 
     } catch (Exception ex) {
@@ -39,7 +41,8 @@ public class Main {
       try {
         userInput = getInput("\nEnter command (PLACE, MOVE, LEFT, RIGHT, ACTIVATE, REPORT) -\nType here: ").toUpperCase();
 
-        switch (Commands.valueOf(userInput)) {
+        //Identify action
+        switch (Command.valueOf(userInput)) {
           case PLACE:
             placeRobotAction(tableWidth, tableHeight);
             continue;
@@ -102,12 +105,14 @@ public class Main {
     }
   }
 
+  //Confirm at least one robot on table exists
   private static void robotExists() throws Exception {
     if (tableController.getRobotsOnTable().size() <= 0) {
       throw new Exception("\nError:\tNo robot on table, please place one first.");
     }
   }
 
+  //Read user command
   private static String getInput(String message) {
     System.out.print(message);
 
@@ -117,6 +122,7 @@ public class Main {
     return userInput;
   }
 
+  //Exit program when "q" entered
   private static void exitProgram(String input) {
     if (input.equalsIgnoreCase("q")) Runtime.getRuntime().exit(0);
   }
