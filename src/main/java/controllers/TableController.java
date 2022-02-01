@@ -1,6 +1,5 @@
 package controllers;
 
-import com.sun.jdi.request.DuplicateRequestException;
 import constants.Direction;
 import constants.Rotate;
 import models.Robot;
@@ -15,6 +14,7 @@ public class TableController {
   static Table table;
   static Robot robot;
 
+  //Create a table with certain dimensions
   public void createTable(int width, int height) {
     table = new Table(width, height);
 
@@ -25,23 +25,27 @@ public class TableController {
     }
   }
 
+  //Place robot on table once a table has been created
   public Boolean placeRobot(int xPos, int yPos, Direction direction) throws Exception {
+    //Make sure the slot (unit) is not already occupied by a robot
     if (table.getRobots().size() > 0) {
       for (Robot r : table.getRobots()) {
         if (r.getXPos() == xPos && r.getYPos() == yPos) {
-          throw new DuplicateRequestException("\nError:\tSlot already occupied");
+          throw new Exception("\nError:\tSlot already occupied");
         }
       }
     }
 
     Slot slotExits = null;
 
+    //  Make sure the slot exists
     for (Slot s : table.getSlots()) {
       if (s.getXCords() == xPos && s.getYCords() == yPos) {
         slotExits = s;
       }
     }
 
+    //If slot exists place robot and make other robots not active
     if (slotExits != null) {
       for (Robot r : table.getRobots()) {
         r.setActive(false);
@@ -69,6 +73,7 @@ public class TableController {
     return table.getRobots();
   }
 
+  //Perform move action
   public void moveRobot() throws Exception {
     var activeRobot = getActiveRobot();
 
@@ -94,12 +99,14 @@ public class TableController {
         break;
     }
 
+    //If a robot is already occupying the next slot, prompt to change direction first
     for (Robot r : table.getRobots()) {
       if (r.getXPos() == nextX && r.getYPos() == nextY) {
         throw new Exception("\nError:\tSlot occupied by '" + r.getIdentifier() + "'. Change direction.");
       }
     }
 
+    //If next move is not a valid move, throw exception; else move robot
     if (nextX >= 0 && nextY >= 0) {
       if (nextX <= (tableMaxWidth - 1) && nextY <= (tableMaxHeight - 1)) {
         activeRobot.setXPos(nextX);
@@ -110,6 +117,7 @@ public class TableController {
     }
   }
 
+  //Rotate robot clockwise or counter-clockwise
   public void rotateRobot(Rotate rotate) throws Exception {
     var activeRobot = getActiveRobot();
 
@@ -119,6 +127,7 @@ public class TableController {
 
     var index = dirList.indexOf(activeRobot.getDirection());
 
+    //Rotate robot left or right
     switch (rotate) {
       case LEFT:
         activeRobot.setDirection(dirList.get((index - 1) < 0 ? (dirList.size() - 1) : (index - 1)));
@@ -129,6 +138,7 @@ public class TableController {
     }
   }
 
+  //Get robot status, i.e. identifier, x-cords, y-cords and current direction
   public void reportStatus() throws Exception {
     var activeRobot = getActiveRobot();
 
@@ -137,6 +147,7 @@ public class TableController {
     System.out.printf("\n[Active Robot]\nName: %s\nX-Position: %d\nY-Position: %d\nFacing: %s\n", activeRobot.getIdentifier(), activeRobot.getXPos(), activeRobot.getYPos(), activeRobot.getDirection());
   }
 
+  //Set robot status active
   public void setActiveRobot(String identifier) throws Exception {
     var success = false;
 
@@ -154,6 +165,7 @@ public class TableController {
     }
   }
 
+  //Get active robot
   private Robot getActiveRobot() {
     Robot activeRobot = null;
 
